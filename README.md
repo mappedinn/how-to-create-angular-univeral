@@ -291,6 +291,24 @@ Now that you've created the TypeScript and Webpack config files and configured t
 First add the `build` and `serve` commands to the scripts section of the `package.json`:
 
 ```json
+  "scripts": {
+    "lint": "tslint ./src/**/*.ts -t verbose",
+    "start": "ng serve",
+    "test": "ng test",
+    "build": "ng build --prod",
+    "e2e": "ng e2e",
+    "ng": "ng",
+    "build:ssr": "npm run build:client-and-server-bundles && npm run webpack:server",
+    "serve:ssr": "node dist/server",
+    "build:client-and-server-bundles": "ng build --prod && ng run angular.io-example:server",
+    "webpack:server": "webpack --config webpack.server.config.js --progress --colors"
+  },
+```
 
+How to run?
+
+```sh
+npm run build:ssr
+npm run serve:ssr
 ```
 

@@ -15,9 +15,12 @@ import { HeroesComponent }      from './heroes/heroes.component';
 import { HeroSearchComponent }  from './hero-search/hero-search.component';
 import { MessagesComponent }    from './messages/messages.component';
 
+import { PLATFORM_ID, APP_ID, Inject } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+
 @NgModule({
   imports: [
-    BrowserModule,
+    BrowserModule.withServerTransition({ appId: 'tour-of-heroes' }),
     FormsModule,
     AppRoutingModule,
     HttpClientModule,
@@ -39,4 +42,12 @@ import { MessagesComponent }    from './messages/messages.component';
   ],
   bootstrap: [ AppComponent ]
 })
-export class AppModule { }
+export class AppModule {
+  constructor(
+    @Inject(PLATFORM_ID) private platformId: Object,
+    @Inject(APP_ID) private appId: string) {
+    const platform = isPlatformBrowser(platformId) ?
+      'in the browser' : 'on the server';
+    console.log(`Running ${platform} with appId=${appId}`);
+  }
+ }
